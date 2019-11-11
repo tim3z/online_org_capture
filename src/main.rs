@@ -33,6 +33,17 @@ impl<'a, 'r> FromRequest<'a, 'r> for Auth {
     }
 }
 
+
+struct Origin(String);
+
+impl<'a, 'r> FromRequest<'a, 'r> for Origin {
+    type Error = ();
+
+    fn from_request(request: &Request) -> Outcome<Self, Self::Error> {
+        Outcome::Success(Origin(request.uri().to_string()))
+    }
+}
+
 #[catch(401)]
 fn challenge_auth() -> impl Responder<'static> {
     let mut response = Response::new();
@@ -52,10 +63,10 @@ fn index(_auth: Auth) -> Option<NamedFile> {
 }
 
 #[post("/", data = "<task>")]
-fn create(task: Form<Task>, state: State<Mutex<Sender<Task>>>, _auth: Auth) -> Redirect {
+fn create(task: Form<Task>, state: State<Mutex<Sender<Task>>>, _auth: Auth, origin: Origin) -> Redirect {
     let tx = state.lock().unwrap();
     tx.send(task.into_inner()).unwrap();
-    Redirect::to("/")
+    Redirect::to(origin.0)
 }
 
 fn main() {
