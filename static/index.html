@@ -2,16 +2,66 @@
 <html>
 <head>
   <title>Capture</title>
+
+  <style type="text/css">
+/* Style inputs, select elements and textareas */
+input[type=text], select, textarea{
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  resize: vertical;
+}
+
+/* Style the label to display next to the inputs */
+label {
+  padding: 12px 12px 12px 0;
+  display: inline-block;
+}
+
+/* Style the submit button */
+input[type=submit] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  float: right;
+}
+
+div.row {
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+  </style>
 </head>
 <body>
 <form method="POST">
-  <input type="text" name="text">
-  <input type="submit">
+  <div class="row">
+    <input type="text" name="text" autofocus="true">
+  </div>
+  <div class="row">
+    <input type="submit">
+  </div>
 </form>
 
 <form method="POST">
-  <textarea type="text" name="text"></textarea>
-  <input type="submit">
+  <div class="row">
+    <textarea type="text" name="text" rows="7"></textarea>
+  </div>
+  <div class="row">
+    <input type="submit">
+  </div>
 </form>
 </body>
 </html>
