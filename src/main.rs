@@ -65,7 +65,8 @@ fn main() {
         for task in rx {
             let mut file = OpenOptions::new().append(true).open(env::var("CAPTURE_TARGET_FILE").unwrap()).expect("Could not open capture file");
             writeln!(file, "** TODO {}", task.text).expect("Could not write to file");
-            Command::new(env::var("CAPTURE_OCC_COMMAND").unwrap())
+            Command::new("php")
+                .arg(env::var("CAPTURE_OCC_COMMAND").unwrap())
                 .arg("files:scan")
                 .arg(format!("--path={}", env::var("CAPTURE_NEXTCLOUD_RESCAN_PATH").unwrap()))
                 .spawn()
